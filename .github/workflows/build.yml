@@ -25,15 +25,17 @@ jobs:
           msystem: ${{matrix.sys}}
           install: >-
             base-devel
-            mingw-w64-${{matrix.env}}-harfbuzz
-            mingw-w64-${{matrix.env}}-freetype            
-            mingw-w64-${{matrix.env}}-libtiff
+            mingw-w64-gcc
             mingw-w64-${{matrix.env}}-SDL2             
             mingw-w64-${{matrix.env}}-SDL2_ttf
             mingw-w64-${{matrix.env}}-SDL2_image
             mingw-w64-${{matrix.env}}-SDL2_mixer
             mingw-w64-${{matrix.env}}-SDL2_gfx
             mingw-w64-${{matrix.env}}-make
+            mingw-w64-${{matrix.env}}-harfbuzz
+            mingw-w64-${{matrix.env}}-freetype
+            mingw-w64-${{matrix.env}}-libwebp
+            mingw-w64-${{matrix.env}}-libtiff
       - name: move things to correct directories
         shell: msys2 {0}
         run: |
@@ -44,5 +46,5 @@ jobs:
       - name: Build Game
         shell: msys2 {0}
         run: |
-          cc=gcc make
+          make
           
