@@ -10,7 +10,7 @@ Dpad or Crank Move Player car left or right, crank can also start a game by rota
 A or B Start a new game at the boot or gameover screen
 
 ## Controls Windows Version
-arrow keys Move Player car left or right, crank can also start a game by rotating it
+arrow keys Move Player car left or right
 
 X or C Start a new game at the boot or gameover screen
 
