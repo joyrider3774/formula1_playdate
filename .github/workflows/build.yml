@@ -50,7 +50,35 @@ jobs:
       - name: Copy dll libraries
         shell: msys2 {0}
         run: |
-          cp /${{matrix.sys}}/bin/*.dll Source/
+          cp /${{matrix.sys}}/bin/libbrotli*.dll Source/
+          cp /${{matrix.sys}}/bin/libbz*.dll Source/
+          cp /${{matrix.sys}}/bin/libdeflate*.dll Source/
+          cp /${{matrix.sys}}/bin/libdeflate*.dll Source/
+          cp /${{matrix.sys}}/bin/libfreetype*.dll Source/
+          cp /${{matrix.sys}}/bin/libgcc*.dll Source/
+          cp /${{matrix.sys}}/bin/libglib*.dll Source/
+          cp /${{matrix.sys}}/bin/libgraphite*.dll Source/        
+          cp /${{matrix.sys}}/bin/libharfbuzz*.dll Source/
+          cp /${{matrix.sys}}/bin/libhwy*.dll Source/
+          cp /${{matrix.sys}}/bin/libiconv*.dll Source/
+          cp /${{matrix.sys}}/bin/libintl*.dll Source/
+          cp /${{matrix.sys}}/bin/libjbig*.dll Source/
+          cp /${{matrix.sys}}/bin/libjpeg*.dll Source/
+          cp /${{matrix.sys}}/bin/libjxl*.dll Source/
+          cp /${{matrix.sys}}/bin/liblcms*.dll Source/
+          cp /${{matrix.sys}}/bin/libLerc*.dll Source/
+          cp /${{matrix.sys}}/bin/liblzma*.dll Source/
+          cp /${{matrix.sys}}/bin/libmpg123*.dll Source/
+          cp /${{matrix.sys}}/bin/libogg*.dll Source/
+          cp /${{matrix.sys}}/bin/libopus*.dll Source/
+          cp /${{matrix.sys}}/bin/libpcre*.dll Source/
+          cp /${{matrix.sys}}/bin/libpng*.dll Source/
+          cp /${{matrix.sys}}/bin/libSDL2*.dll Source/
+          cp /${{matrix.sys}}/bin/libstdc*.dll Source/
+          cp /${{matrix.sys}}/bin/libtiff*.dll Source/
+          cp /${{matrix.sys}}/bin/libwebp*.dll Source/
+          cp /${{matrix.sys}}/bin/libzstd*.dll Source/
+          cp /${{matrix.sys}}/bin/zlib*.dll Source/   
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
