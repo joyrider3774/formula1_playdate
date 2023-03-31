@@ -62,7 +62,6 @@ void setupGame(void)
 int mainLoop(void* ud)
 {
     int result = 1;
-    debugMode = false;
     prevButtons = currButtons;
     pd->system->getButtonState(&currButtons, NULL, NULL);
 
