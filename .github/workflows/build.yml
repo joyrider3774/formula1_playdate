@@ -80,6 +80,7 @@ jobs:
           cp /${{matrix.sys}}/bin/libzstd*.dll Source/
           cp /${{matrix.sys}}/bin/zlib*.dll Source/
           cp /${{matrix.sys}}/bin/libSDL2*.dll Source/
+          cp /${{matrix.sys}}/bin/SDL2*.dll Source/
           cp /${{matrix.sys}}/bin/libsharpyuv*.dll Source/
           cp /${{matrix.sys}}/bin/libwinpthread*.dll Source/
       - name: Store build
