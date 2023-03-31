@@ -1,0 +1,51 @@
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+   branches: [ main ]
+  # pull_request:
+  #  branches: [ main ]
+
+  # Allows you to run this workflow manually ftarget the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - { sys: mingw64, env: x86_64 }
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Checkout Playdate SDL2 Api Sources
+        uses: actions/checkout@v3
+        with:
+          repository: 'joyrider3774/Playdate_Api_SDL2'
+          path: build
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          path: tmp
+      - name: move things to correct directories
+        run: |
+          rm -rf ./src/srcgame
+          rm -rf ./Source
+          mv tmp/source ./Source
+          mv tmp/src ./src/srcgame           
+      - name: Setup Msys
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          install: >-
+            base-devel
+            mingw-w64-${{matrix.env}}-SDL2 
+            mingw-w64-${{matrix.env}}-SDL2_ttf
+            mingw-w64-${{matrix.env}}-SDL2_image
+            mingw-w64-${{matrix.env}}-SDL2_mixer
+            mingw-w64-${{matrix.env}}-SDL2_gfx
+            mingw-w64-${{matrix.env}}-make
+      - name: Build Game
+        run: make
