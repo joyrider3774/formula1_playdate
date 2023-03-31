@@ -48,6 +48,6 @@ jobs:
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
-          name: Formula1 ${{matrix.sys}}
-          path: ${{matrix.pdx}}/
+          name: Formula1 ${{matrix.env}}
+          path: ${{matrix.pdx}}
 
