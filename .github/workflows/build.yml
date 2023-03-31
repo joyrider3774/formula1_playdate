@@ -25,8 +25,8 @@ jobs:
           msystem: ${{matrix.sys}}
           install: >-
             base-devel
-            mingw-w64-${{matrix.env}}-freetype
             mingw-w64-${{matrix.env}}-harfbuzz
+            mingw-w64-${{matrix.env}}-freetype            
             mingw-w64-${{matrix.env}}-libtiff
             mingw-w64-${{matrix.env}}-SDL2             
             mingw-w64-${{matrix.env}}-SDL2_ttf
@@ -44,5 +44,5 @@ jobs:
       - name: Build Game
         shell: msys2 {0}
         run: |
-          make
+          cc=gcc make
           
