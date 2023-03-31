@@ -47,4 +47,12 @@ jobs:
         shell: msys2 {0}
         run: |
           make
-          
+      - name: Copy dll libraries
+        shell: msys2 {0}
+        run: |
+          cp /${{matrix.env}}/bin/*.dll Source/
+      - name: Store build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Formula1 ${{ matrix.name }}
+          path: Source/
