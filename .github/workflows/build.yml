@@ -1,11 +1,5 @@
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-   branches: [ main ]
-  # pull_request:
-  #  branches: [ main ]
-
   # Allows you to run this workflow manually ftarget the Actions tab
   workflow_dispatch:
 
@@ -15,10 +9,7 @@ jobs:
       matrix:
         include:
           - { sys: mingw64, env: x86_64 }
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
+    runs-on: windows-latest    
     steps:
       - name: Checkout Playdate SDL2 Api Sources
         uses: actions/checkout@v3
@@ -30,6 +21,7 @@ jobs:
         with:
           path: tmp
       - name: move things to correct directories
+        shell: msys2 {0}
         run: |
           rm -rf ./src/srcgame
           rm -rf ./Source
@@ -48,4 +40,7 @@ jobs:
             mingw-w64-${{matrix.env}}-SDL2_gfx
             mingw-w64-${{matrix.env}}-make
       - name: Build Game
-        run: make
+        shell: msys2 {0}
+        run: |
+          shell: msys2 {0}
+          
