@@ -9,6 +9,7 @@ jobs:
       matrix:
         include:
           - { sys: mingw64, env: x86_64 }
+          - { sys: mingw32, env: i686 }
     runs-on: windows-latest    
     steps:
       - name: Checkout Playdate SDL2 Api Sources
@@ -72,13 +73,14 @@ jobs:
           cp /${{matrix.sys}}/bin/libogg*.dll Source/
           cp /${{matrix.sys}}/bin/libopus*.dll Source/
           cp /${{matrix.sys}}/bin/libpcre*.dll Source/
-          cp /${{matrix.sys}}/bin/libpng*.dll Source/
-          cp /${{matrix.sys}}/bin/libSDL2*.dll Source/
+          cp /${{matrix.sys}}/bin/libpng*.dll Source/          
           cp /${{matrix.sys}}/bin/libstdc*.dll Source/
           cp /${{matrix.sys}}/bin/libtiff*.dll Source/
           cp /${{matrix.sys}}/bin/libwebp*.dll Source/
           cp /${{matrix.sys}}/bin/libzstd*.dll Source/
-          cp /${{matrix.sys}}/bin/zlib*.dll Source/   
+          cp /${{matrix.sys}}/bin/zlib*.dll Source/
+          cp /${{matrix.sys}}/bin/libSDL2*.dll Source/
+          cp /${{matrix.sys}}/bin/SDL2*.dll Source/
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
