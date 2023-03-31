@@ -9,6 +9,7 @@ jobs:
       matrix:
         include:
           - { pdx: Formula1.pdx, env: playdate }
+          
     runs-on: ubuntu-latest       
     steps:
       # ==== dependencies ====
@@ -44,10 +45,15 @@ jobs:
           cd build
           cmake -DCMAKE_TOOLCHAIN_FILE=$PLAYDATE_SDK_PATH/C_API/buildsupport/arm.cmake ..
           make
-                         
+      
+      - name: Prepare Artifact directory
+        run: |
+          mkdir output
+          mv ${{matrix.pdx}} output/
+      
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
-          name: Formula1 ${{matrix.sys}}
-          path: ${{matrix.pdx}}/
+          name: Formula1 ${{matrix.env}}
+          path: output
 
