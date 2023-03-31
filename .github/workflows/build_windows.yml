@@ -42,7 +42,7 @@ jobs:
         run: |
           rm -rf ./src/srcgame
           rm -rf ./Source
-          mv tmp/source ./Source
+          mv tmp/Source ./Source
           mv tmp/src ./src/srcgame                
       - name: Build Game
         shell: msys2 {0}
