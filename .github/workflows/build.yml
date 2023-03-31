@@ -15,7 +15,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'joyrider3774/Playdate_Api_SDL2'
-          path: build
       - name: Checkout sources
         uses: actions/checkout@v3
         with:
