@@ -4,9 +4,11 @@
 #include <string.h>
 #include "pd_api.h"
 
-unsigned char codekey[] = { 0x01, 0x00};
+//this is a stub i did not commit the real code to prevent the key to be easily reversed
 
-void obfuscateCodeKey(PlaydateAPI* pd, unsigned char* codein, unsigned char** codeout)
+char codekey[] = { 0x01, 0x00};
+
+void obfuscateCodeKey(PlaydateAPI* pd, char* codein, char** codeout)
 {
 	size_t len = strlen(codein);
 	char* tmp = pd->system->realloc(NULL, len + 1);
@@ -14,7 +16,7 @@ void obfuscateCodeKey(PlaydateAPI* pd, unsigned char* codein, unsigned char** co
 	*codeout = tmp;
 }
 
-void deObfuscateCodeKey(PlaydateAPI* pd, unsigned char* codein, unsigned char** codeout)
+void deObfuscateCodeKey(PlaydateAPI* pd, char* codein, char** codeout)
 {
 	size_t len = strlen(codein);
 	char* tmp = pd->system->realloc(NULL, len + 1);

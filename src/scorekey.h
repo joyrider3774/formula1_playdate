@@ -3,9 +3,9 @@
 
 #include "pd_api.h"
 
-extern unsigned char codekey[];
+extern char codekey[];
 
-void obfuscateCodeKey(PlaydateAPI* pd, unsigned char* codein, unsigned char** codeout);
-void deObfuscateCodeKey(PlaydateAPI* pd, unsigned char* codein, unsigned char** codeout);
+void obfuscateCodeKey(PlaydateAPI* pd, char* codein, char** codeout);
+void deObfuscateCodeKey(PlaydateAPI* pd, char* codein, char** codeout);
 
 #endif
