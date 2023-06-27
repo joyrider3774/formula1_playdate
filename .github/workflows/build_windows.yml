@@ -20,6 +20,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: tmp
+
+      - name: Setup Secret codekey.h File
+        env: 
+          SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
+        run : |
+          echo $SECRET > src/codekey.h
+
       - name: Setup Msys
         uses: msys2/setup-msys2@v2
         with:
@@ -43,7 +50,7 @@ jobs:
           rm -rf ./src/srcgame
           rm -rf ./Source
           mv tmp/Source ./Source
-          mv tmp/src ./src/srcgame                
+          mv tmp/src ./src/srcgame
       - name: Build Game
         shell: msys2 {0}
         env: # Or as an environment variable
