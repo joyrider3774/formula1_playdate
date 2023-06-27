@@ -41,7 +41,7 @@ jobs:
         env: 
           SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
         run : |
-          echo $SECRET > src/codekey.h
+          base64 --decode '$SECRET' > src/codekey.h
       
       - name: Build       
         run: |
