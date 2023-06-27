@@ -8,7 +8,6 @@
 #include "crank.h"
 #include "scoresubmit/scoresubmit.h"
 #include "pd_api.h"
-#include "scorekey.h"
 
 void DrawGame(void)
 {
@@ -213,17 +212,12 @@ void initGameOver(void)
 		pd->graphics->freeBitmap(QRCode);
 	if (verifyCode)
 		pd->system->realloc(verifyCode, 0);
-	char* envcodekeyin = getenv("FORMULA1_PLAYDATE_CODEKEY");
-	if (envcodekeyin)
-	{
-		QRCode = CreateQrCodeSubmit(pd, envcodekeyin, 1, Score, 205, &verifyCode);
-	}
-	else
-	{
-		char* deObfuscatedCodeKey;
-		deObfuscateCodeKey(pd, codekey, &deObfuscatedCodeKey);
-		QRCode = CreateQrCodeSubmit(pd, deObfuscatedCodeKey, 1, Score, 205, &verifyCode);
-	}
+#ifdef FORMULA1_PLAYDATE_CODEKEY
+	char codekey[] = {FORMULA1_PLAYDATE_CODEKEY};
+#else
+	char codekey[] = "SECRETKEY";
+#endif
+	QRCode = CreateQrCodeSubmit(pd, codekey, 1, Score, 205, &verifyCode);
 	pd->system->logToConsole("score: %u verifier:%s", Score, verifyCode);
 }
 
