@@ -213,9 +213,17 @@ void initGameOver(void)
 		pd->graphics->freeBitmap(QRCode);
 	if (verifyCode)
 		pd->system->realloc(verifyCode, 0);
-	char* deObfuscatedCodeKey;
-	deObfuscateCodeKey(pd, codekey, &deObfuscatedCodeKey);
-	QRCode = CreateQrCodeSubmit(pd, deObfuscatedCodeKey , 1, Score, 205, &verifyCode);
+	char* envcodekeyin = getenv("FORMULA1_PLAYDATE_CODEKEY");
+	if (envcodekeyin)
+	{
+		QRCode = CreateQrCodeSubmit(pd, envcodekeyin, 1, Score, 205, &verifyCode);
+	}
+	else
+	{
+		char* deObfuscatedCodeKey;
+		deObfuscateCodeKey(pd, codekey, &deObfuscatedCodeKey);
+		QRCode = CreateQrCodeSubmit(pd, deObfuscatedCodeKey, 1, Score, 205, &verifyCode);
+	}
 	pd->system->logToConsole("score: %u verifier:%s", Score, verifyCode);
 }
 
