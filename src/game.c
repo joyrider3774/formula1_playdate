@@ -1,6 +1,6 @@
 
 #include <time.h>
-
+#include <string.h>
 #include "commonvars.h"
 #include "sound.h"
 #include "printfuncs.h"

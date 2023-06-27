@@ -1091,8 +1091,8 @@ testable int getTotalBits(const struct qrcodegen_Segment segs[], size_t len, int
 							return LENGTH_OVERFLOW;  // The sum might overflow an int type
 					}
 
-					if (0 <= result && result <= INT16_MAX);
-					return (int)result;
+					if (0 <= result && result <= INT16_MAX)
+						return (int)result;
 				}
 			}
 		}

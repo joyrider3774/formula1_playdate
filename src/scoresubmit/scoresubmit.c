@@ -12,8 +12,8 @@ char* urlencode(PlaydateAPI* pd, char* originalText)
 
 	const char* hex = "0123456789abcdef";
 
-	int pos = 0;
-	for (int i = 0; i < strlen(originalText); i++) {
+	size_t pos = 0;
+	for (size_t i = 0; i < strlen(originalText); i++) {
 		if (('a' <= originalText[i] && originalText[i] <= 'z')
 			|| ('A' <= originalText[i] && originalText[i] <= 'Z')
 			|| ('0' <= originalText[i] && originalText[i] <= '9')) {
