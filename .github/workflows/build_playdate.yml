@@ -37,15 +37,20 @@ jobs:
           rm -f "PlaydateSDK-latest.tar.gz"
           mv PlaydateSDK-* PlaydateSDK  
       
-      - name: Build
+      - name: Setup Secret codekey.h File
         env: 
           SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
+        run : |
+          echo $SECRET > src/codekey.h
+      
+      - name: Build       
         run: |
           export PLAYDATE_SDK_PATH="$PWD/PlaydateSDK/"         
           echo SDK Path: $PLAYDATE_SDK_PATH
           mkdir build
           cd build
-          cmake -E env "CFLAGS=\"-DFORMULA1_PLAYDATE_CODEKEY=$SECRET\"" cmake -DCMAKE_TOOLCHAIN_FILE=$PLAYDATE_SDK_PATH/C_API/buildsupport/arm.cmake ..
+          cmake -DCMAKE_TOOLCHAIN_FILE=$PLAYDATE_SDK_PATH/C_API/buildsupport/arm.cmake ..
+          cmake -DCMAKE_BUILD_TYPE=Release ..
           make
       
       - name: Prepare Artifact directory
