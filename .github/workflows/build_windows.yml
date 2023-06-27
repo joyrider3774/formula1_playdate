@@ -46,8 +46,10 @@ jobs:
           mv tmp/src ./src/srcgame                
       - name: Build Game
         shell: msys2 {0}
+        env: # Or as an environment variable
+          SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
         run: |
-          make
+          make "SRC_C_DIR=src/srcgame src/srcgame/scoresubmit"  "CFLAGS=\"-DFORMULA1_PLAYDATE_CODEKEY=$SECRET\" -DTARGET_EXTENSION -Wall -Wextra -Wno-unused-parameter  `sdl2-config --cflags`"
       - name: Copy dll libraries
         shell: msys2 {0}
         run: |
