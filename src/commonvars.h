@@ -19,7 +19,7 @@
 #define gsInitIntro (gsInitDiff + gsIntro)
 #define gsInitGameIntro (gsInitDiff + gsGameIntro)
 #define gsInitGameOver (gsInitDiff + gsGameOver)
-
+extern unsigned char* verifyCode;
 extern int gameState, debugMode;
 extern bool EnemyStates[3][3];
 extern bool PlayerStates[3];
@@ -30,7 +30,7 @@ extern bool CanMove, CrashSoundPlayed;
 extern PDMenuItem* resetHiScoreMenuItem;
 extern PlaydateAPI *pd;
 extern PDButtons currButtons, prevButtons;
-extern LCDBitmap *Player, *Enemy, *Background;
+extern LCDBitmap *Player, *Enemy, *Background, * QRCode;
 extern LCDBitmapTable* introFont, *lcdFont;
 
 void setPDPtr(PlaydateAPI* p);

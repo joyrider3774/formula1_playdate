@@ -6,6 +6,9 @@
 #include "printfuncs.h"
 #include "savestate.h"
 #include "crank.h"
+#include "scoresubmit/scoresubmit.h"
+#include "pd_api.h"
+#include "scorekey.h"
 
 void DrawGame(void)
 {
@@ -206,6 +209,14 @@ void game(void)
 
 void initGameOver(void)
 {
+	if (QRCode)
+		pd->graphics->freeBitmap(QRCode);
+	if (verifyCode)
+		pd->system->realloc(verifyCode, 0);
+	char* deObfuscatedCodeKey;
+	deObfuscateCodeKey(pd, codekey, &deObfuscatedCodeKey);
+	QRCode = CreateQrCodeSubmit(pd, deObfuscatedCodeKey , 1, Score, 205, &verifyCode);
+	pd->system->logToConsole("score: %u verifier:%s", Score, verifyCode);
 }
 
 void gameOver(void)
@@ -245,6 +256,26 @@ void gameOver(void)
 		for (X = 0; X < LivesLost; X++)
 			printMessage(lcdFont, 11 + X, 4, 8, "X");
 		DrawGame();		
+	}
+	
+	if (QRCode && (Score == getHiScore()))
+	{
+		pd->graphics->fillRect(20, 0, 280, 240, kColorBlack);
+		pd->graphics->fillRect(21, 1, 278, 239, kColorWhite);
+		int tw = pd->graphics->getTextWidth(NULL, "SUBMIT YOUR HI-SCORE ONLINE", strlen("SUBMIT YOUR HI-SCORE ONLINE"), kASCIIEncoding, 0);
+		pd->graphics->drawText("SUBMIT YOUR HI-SCORE ONLINE", strlen("SUBMIT YOUR HI-SCORE ONLINE"), kASCIIEncoding, (320 - tw) >> 1, 2);
+		char* msg;
+		pd->system->formatString(&msg, "%d", Score);
+		tw = pd->graphics->getTextWidth(NULL, msg, strlen(msg), kASCIIEncoding, 0);
+		pd->graphics->drawText(msg, strlen(msg), kASCIIEncoding, (320 - tw) >> 1, 17);
+		pd->system->realloc(msg, 0);
+		if (QRCode)
+		{
+			int w, h;
+			pd->graphics->getBitmapData(QRCode, &w, &h, NULL, NULL, NULL);
+			//-80 from drawoffset set
+			pd->graphics->drawBitmap(QRCode, (320 - w) >> 1, 33, kBitmapUnflipped);
+		}
 	}
 
 }

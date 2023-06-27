@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #include "pd_api.h"
 #include "crank.h"
 #include "maingameloop.h"
