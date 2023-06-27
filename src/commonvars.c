@@ -9,7 +9,7 @@ PlaydateAPI* pd;
 PDButtons currButtons, prevButtons;
 LCDBitmap* Player, * Enemy, * Background, * QRCode = NULL;
 LCDBitmapTable* introFont, * lcdFont;
-unsigned char* verifyCode = NULL;
+char* verifyCode = NULL;
 bool EnemyStates[3][3];
 bool PlayerStates[3];
 int HitPosition, LivesLost;

@@ -30,12 +30,15 @@ set(PLAYDATE_GAME_DEVICE Formula1_DEVICE)
 
 project(${PLAYDATE_GAME_NAME} C ASM)
 
+
 file(GLOB SOURCES
 	"src/*.c"
+	"src/scoresubmit/*.c"
 )
 
 file(GLOB HEADERS
 	"src/*.h"
+	"src/scoresubmit/*.h"
 )
 
 if (TOOLCHAIN STREQUAL "armgcc")

@@ -29,24 +29,24 @@ char* urlencode(PlaydateAPI* pd, char* originalText)
 	return encodedText;
 }
 
-unsigned char* CreateVerifierCode(PlaydateAPI* pd, char* secret_key, unsigned int gameId, unsigned int score)
+char* CreateVerifierCode(PlaydateAPI* pd, char* secret_key, unsigned int gameId, unsigned int score)
 {
-	unsigned char* verifycode;
+	char* verifycode;
 	char* verifycodemsg;
 
 	pd->system->formatString(&verifycodemsg, "%u%u%s", score, gameId, secret_key);
-	uint8_t hashedverifycode[SHA1_HASH_SIZE];
+	unsigned char hashedverifycode[SHA1_HASH_SIZE];
 	hmac_sha1(secret_key, strlen(secret_key) * sizeof(char), verifycodemsg, strlen(verifycodemsg), hashedverifycode, SHA1_HASH_SIZE);
-	verifycode = base64_encode(pd, (unsigned char*)hashedverifycode, SHA1_HASH_SIZE, NULL);
+	verifycode = (char *) base64_encode(pd, hashedverifycode, SHA1_HASH_SIZE, NULL);
 	pd->system->realloc(verifycodemsg, 0);
 	return verifycode;
 }
 
-LCDBitmap* CreateQrCodeSubmit(PlaydateAPI* pd, char* secret_key, unsigned int gameId, unsigned int score, int DesiredQrCodeSize, unsigned char** verifyCodeOut)
+LCDBitmap* CreateQrCodeSubmit(PlaydateAPI* pd, char* secret_key, unsigned int gameId, unsigned int score, int DesiredQrCodeSize, char** verifyCodeOut)
 {
 	//unsigned int t = pd->system->getCurrentTimeMilliseconds();
 	char* qrsubmit;
-	unsigned char * verifyCode = CreateVerifierCode(pd, secret_key, gameId, score);
+	char * verifyCode = CreateVerifierCode(pd, secret_key, gameId, score);
 	//need to urlencode verifycode because of base64 plus signs (+), score and gameid should be fine
 	char* verifyCodeEncoded = urlencode(pd, verifyCode);
 	pd->system->formatString(&qrsubmit, "https://scores.joyrider3774.xyz/AddScoreVerify.php?game=%d&score=%u&verify=%s", gameId, score, verifyCodeEncoded);
