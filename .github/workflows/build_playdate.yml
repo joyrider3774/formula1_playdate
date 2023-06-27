@@ -45,7 +45,7 @@ jobs:
           echo SDK Path: $PLAYDATE_SDK_PATH
           mkdir build
           cd build
-          cmake -E env CFLAGS="-DFORMULA1_PLAYDATE_CODEKEY=$SECRET" -DCMAKE_TOOLCHAIN_FILE=$PLAYDATE_SDK_PATH/C_API/buildsupport/arm.cmake ..
+          cmake -E env CFLAGS="-DFORMULA1_PLAYDATE_CODEKEY=$SECRET" cmake -DCMAKE_TOOLCHAIN_FILE=$PLAYDATE_SDK_PATH/C_API/buildsupport/arm.cmake ..
           make
       
       - name: Prepare Artifact directory
