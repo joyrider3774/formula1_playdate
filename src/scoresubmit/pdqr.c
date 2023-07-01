@@ -34,8 +34,7 @@ LCDBitmap* CreateQrCode(PlaydateAPI* pd, const char* value, int desiredSize)
                 }
             }
         }
-        
-        pd->graphics->pushContext(pd->graphics->getDisplayBufferBitmap());
+        pd->graphics->popContext();
     }
     return Result;
 }
