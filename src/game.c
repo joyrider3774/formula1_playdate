@@ -213,11 +213,11 @@ void initGameOver(void)
 		pd->graphics->freeBitmap(QRCode);
 	if (verifyCode)
 		pd->system->realloc(verifyCode, 0);
-	char codekey[64] = "SECRETKEY";
+	volatile char codekey[64] = "SECRET01SECRET01SECRET01SECRET01SECRET01SECRET01SECRET01SECRET01";
 #ifdef FORMULA1_PLAYDATE_CODEKEY
 	FORMULA1_PLAYDATE_CODEKEY
 #endif 
-	QRCode = CreateQrCodeSubmit(pd, codekey, 1, Score, 205, &verifyCode);
+	QRCode = CreateQrCodeSubmit(pd, (char *)codekey, 1, Score, 210, &verifyCode);
 	pd->system->logToConsole("score: %u verifier:%s", Score, verifyCode);
 }
 
@@ -269,14 +269,16 @@ void gameOver(void)
 		char* msg;
 		pd->system->formatString(&msg, "%d", Score);
 		tw = pd->graphics->getTextWidth(NULL, msg, strlen(msg), kASCIIEncoding, 0);
-		pd->graphics->drawText(msg, strlen(msg), kASCIIEncoding, (320 - tw) >> 1, 17);
+		pd->graphics->drawText(msg, strlen(msg), kASCIIEncoding, (320 - tw) >> 1, 22);
 		pd->system->realloc(msg, 0);
 		if (QRCode)
 		{
+			pd->graphics->setFont(NULL);
+			
 			int w, h;
 			pd->graphics->getBitmapData(QRCode, &w, &h, NULL, NULL, NULL);
 			//-80 from drawoffset set
-			pd->graphics->drawBitmap(QRCode, (320 - w) >> 1, 33, kBitmapUnflipped);
+			pd->graphics->drawBitmap(QRCode, (320 - w) >> 1, 43, kBitmapUnflipped);
 		}
 	}
 
