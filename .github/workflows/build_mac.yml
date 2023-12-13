@@ -19,7 +19,7 @@ jobs:
       - name: Setup homebrew stuff
         run: |
           brew update
-          brew install SDL2 SDL2_Mixer SDL2_Image SDL_ttf SDL2_gfx dylibbundler
+          brew install SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
           brew upgrade
        
       - name: Setup Secret codekey.h File
