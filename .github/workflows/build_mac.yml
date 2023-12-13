@@ -41,7 +41,7 @@ jobs:
       - name: run dylibbundler
         run: |
           cd ./Source
-          dylibbundler -cd -x -b ./game
+          dylibbundler -cd -b -x ./game
       
       - name: create app 
         run: |
