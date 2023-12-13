@@ -1,0 +1,98 @@
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually ftarget the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-11    
+    steps:
+      - name: Checkout Playdate SDL2 Api Sources
+        uses: actions/checkout@v3
+        with:
+          repository: 'joyrider3774/Playdate_Api_SDL2'
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          path: tmp
+        
+      - name: Setup homebrew stuff
+        run: |
+          brew update
+          brew install SDL2 SDL2_Mixer SDL2_Image SDL_ttf SDL2_gfx dylibbundler
+          brew upgrade
+       
+      - name: Setup Secret codekey.h File
+        env: 
+          SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
+        run : |
+          echo "$SECRET" | base64 --decode >  tmp/src/codekey.h
+
+      - name: move things to correct directories
+        run: |
+          rm -rf ./src/srcgame
+          mv tmp/src ./src/srcgame
+          cp -Rf tmp/Source/. ./Source
+      - name: Build Game
+        env: # Or as an environment variable
+          SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
+        run: |
+          make "SRC_C_DIR=src/srcgame src/srcgame/scoresubmit"
+      - name: run dylibbundler
+        run: |
+          cd ./Source
+          dylibbundler -cd -x -b ./game
+      
+      - name: create app 
+        run: |
+          mkdir Formula1_playdate.app
+          mkdir Formula1_playdate.app/Contents
+          cp -R ./Source ./Formula1_playdate.app/Contents/MacOs
+          mv ./Formula1_playdate.app/Contents/MacOs/libs ./Formula1_playdate.app/Contents/libs
+          mkdir Formula1_playdate.app/Contents/Resources
+          mkdir Icon.iconset
+          sips -z 16 16 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_16x16.png
+          sips -z 32 32 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_16x16@2x.png
+          sips -z 32 32 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_32x32.png
+          sips -z 64 64 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_32x32@2x.png
+          sips -z 128 128 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_128x128.png
+          sips -z 256 256 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_128x128@2x.png
+          sips -z 256 256 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_256x256.png
+          sips -z 512 512 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_256x256@2x.png
+          sips -z 512 512 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_512x512.png
+          sips -z 1024 1024 ./Formula1_playdate.app/Contents/MacOs/metadata/icon.png --out Icon.iconset/icon_512x512@2x.png
+          iconutil -c icns Icon.iconset
+          mv icon.icns ./Formula1_playdate.app/Contents/Resources/Icon.icns
+          echo "<?xml version='1.0' encoding='UTF-8'?>" > ./Formula1_playdate.app/Contents/Info.plist
+          echo "<!DOCTYPE plist PUBLIC '-//Apple Computer//DTD PLIST 1.0//EN' 'http://www.apple.com/DTDs/PropertyList-1.0.dtd'>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "<plist version='1.0'>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "  <dict>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundleExecutable</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>game.sh</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundleIdentifier</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>com.github.joyrider3774.formula1_playdate</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundleName</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>Formula 1 Playdate</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundleIconFile</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>Icon.icns</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundleShortVersionString</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>0.01</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundleInfoDictionaryVersion</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>6.0</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>CFBundlePackageType</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <string>APPL</string>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>IFMajorVersion</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <integer>0</integer>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <key>IFMinorVersion</key>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "    <integer>1</integer>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "  </dict>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "</plist>" >> ./Formula1_playdate.app/Contents/Info.plist
+          echo "#!/bin/bash" > ./Formula1_playdate.app/Contents/MacOs/game.sh
+          echo "cd \"\${0%/*}\"" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
+          echo "./game -a" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
+          chmod +x ./Formula1_playdate.app/Contents/MacOs/game.sh
+      - name: Store build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Formula1 Mac Os 11
+          path: Formula1_playdate.app
