@@ -91,10 +91,13 @@ jobs:
           echo "cd \"\${0%/*}\"" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
           echo "./game -a" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
           chmod +x ./Formula1_playdate.app/Contents/MacOs/game.sh
-      - name: prepare artifact
+      - name: prepare artifact 
+        # first tar.gz compresses to keep executable bit on the binary when extracted
+        # then prepares a directory to zip that file as github only supports zipped artifacts
         run: |
           mkdir artifact
-          mv ./Formula1_playdate.app ./artifact/
+          tar -czvf Formula1_playdate.tar.gz ./Formula1_playdate.app
+          mv  Formula1_playdate.tar.gz ./artifact/          
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
