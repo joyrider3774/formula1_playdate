@@ -19,8 +19,8 @@ jobs:
       - name: Setup homebrew stuff
         run: |
           brew update
-          brew install SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
-          brew upgrade
+          brew install --ignore-dependencies sqlite portaudio fluid-synth libxmp gettext glib aom libavif
+          brew install --ignore-dependencies SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
        
       - name: Setup Secret codekey.h File
         env: 
