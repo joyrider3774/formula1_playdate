@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11    
+    runs-on: macos-12    
     steps:
       - name: Checkout Playdate SDL2 Api Sources
         uses: actions/checkout@v3
