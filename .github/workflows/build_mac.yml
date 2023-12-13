@@ -93,7 +93,7 @@ jobs:
       - name: prepare artifact
         run: |
           mkdir artifact
-          move ./Formula1_playdate.app ./artifact/
+          mv ./Formula1_playdate.app ./artifact/
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
