@@ -19,8 +19,7 @@ jobs:
       - name: Setup homebrew stuff
         run: |
           brew update
-          brew install --ignore-dependencies portaudio fluid-synth libxmp gettext glib aom libavif
-          brew install --ignore-dependencies SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
+          brew install SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
        
       - name: Setup Secret codekey.h File
         env: 
@@ -91,8 +90,12 @@ jobs:
           echo "cd \"\${0%/*}\"" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
           echo "./game -a" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
           chmod +x ./Formula1_playdate.app/Contents/MacOs/game.sh
+      - name: prepare artifact
+        run: |
+          mkdir artifact
+          move ./Formula1_playdate.app ./artifact/
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
-          name: Formula1 Mac Os 11
-          path: Formula1_playdate.app
+          name: Formula1 Mac Os 12
+          path: artifact
