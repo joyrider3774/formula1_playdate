@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11    
+    runs-on: macos-12    
     steps:
       - name: Checkout Playdate SDL2 Api Sources
         uses: actions/checkout@v3
@@ -19,8 +19,8 @@ jobs:
       - name: Setup homebrew stuff
         run: |
           brew update
-          brew install SDL2 SDL2_Mixer SDL2_Image SDL_ttf SDL2_gfx dylibbundler
-          brew upgrade
+          brew install --ignore-dependencies portaudio fluid-synth libxmp gettext glib aom libavif
+          brew install --ignore-dependencies SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
        
       - name: Setup Secret codekey.h File
         env: 
@@ -41,7 +41,7 @@ jobs:
       - name: run dylibbundler
         run: |
           cd ./Source
-          dylibbundler -cd -x -b ./game
+          dylibbundler -cd -b -x ./game
       
       - name: create app 
         run: |
@@ -91,8 +91,15 @@ jobs:
           echo "cd \"\${0%/*}\"" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
           echo "./game -a" >> ./Formula1_playdate.app/Contents/MacOs/game.sh
           chmod +x ./Formula1_playdate.app/Contents/MacOs/game.sh
+      - name: prepare artifact 
+        # first tar.gz compresses to keep executable bit on the binary when extracted
+        # then prepares a directory to zip that file as github only supports zipped artifacts
+        run: |
+          mkdir artifact
+          tar -czvf Formula1_playdate.tar.gz ./Formula1_playdate.app
+          mv  Formula1_playdate.tar.gz ./artifact/          
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
-          name: Formula1 Mac Os 11
-          path: Formula1_playdate.app
+          name: Formula1 Mac Os 12
+          path: artifact
