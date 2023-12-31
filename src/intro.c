@@ -7,7 +7,7 @@
 
 #define FRAMEDELAY 60
 
-int frames = 0;
+
 int ay;
 
 void initIntro(void)

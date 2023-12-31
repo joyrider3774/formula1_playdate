@@ -32,7 +32,7 @@ extern PlaydateAPI *pd;
 extern PDButtons currButtons, prevButtons;
 extern LCDBitmap *Player, *Enemy, *Background, * QRCode;
 extern LCDBitmapTable* introFont, *lcdFont;
-
+extern int frames;
 void setPDPtr(PlaydateAPI* p);
 
 #endif

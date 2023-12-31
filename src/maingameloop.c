@@ -45,10 +45,23 @@ void MenuItemCallback(void* userdata)
     setHiScore(0);
 }
 
+void resetGlobals()
+{
+	frames = 0;
+	for (int X = 0; X < 3; X++)
+		for (int Y = 0; Y < 3; Y++)
+			EnemyStates[X][Y] = false;
+	for (int X = 0; X < 3; X++)
+		PlayerStates[X] = false;
+	PlayerStates[1] = false;
+}
+
 // game initialization
 void setupGame(void)
 {  
-    gameState = gsInitIntro;
+    resetGlobals();
+	pd->graphics->setBackgroundColor(kColorBlack);
+	gameState = gsInitIntro;
     setCrankMoveThreshold(70);
     preloadImages();    
     initSaveState();    

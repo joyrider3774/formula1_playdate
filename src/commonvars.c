@@ -15,7 +15,7 @@ bool PlayerStates[3];
 int HitPosition, LivesLost;
 int Teller, FlashesDelay, Flashes, Delay, Score;
 bool CanMove, CrashSoundPlayed;
-
+int frames;
 void setPDPtr(PlaydateAPI* p) {
     pd = p;
 }
