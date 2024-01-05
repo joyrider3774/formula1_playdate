@@ -40,6 +40,15 @@ void preloadImages(void)
     Background = loadImageAtPath("images/background");
 }
 
+void unLoadImages(void)
+{
+	pd->graphics->freeBitmapTable(introFont);
+	pd->graphics->freeBitmapTable(lcdFont);
+	pd->graphics->freeBitmap(Player);
+	pd->graphics->freeBitmap(Enemy);
+	pd->graphics->freeBitmap(Background);
+}
+
 void MenuItemCallback(void* userdata)
 {
     setHiScore(0);
@@ -68,6 +77,13 @@ void setupGame(void)
     initSound();
     setSoundOn(1);
     resetHiScoreMenuItem = pd->system->addMenuItem("Reset HiScore", MenuItemCallback, NULL);    
+}
+
+void terminateGame(void)
+{
+	unLoadImages();
+	deinitSound();
+	pd->system->removeAllMenuItems();
 }
 
 // main update function

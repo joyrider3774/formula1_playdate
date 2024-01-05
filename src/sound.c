@@ -36,6 +36,11 @@ void initSound(void)
     crashSound = loadSoundFile("sound/crash");
 }
 
+void deinitSound(void)
+{
+	pd->sound->fileplayer->freePlayer(tickSound);
+	pd->sound->fileplayer->freePlayer(crashSound);
+}
 
 void playSound(FilePlayer* soundPlayer)
 {
