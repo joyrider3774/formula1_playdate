@@ -11,9 +11,11 @@ Dpad or Crank Move Player car left or right, crank can also start a game by rota
 
 A or B Start a new game at the boot or gameover screen
 
-## Controls Windows Version
+## Controls Windows / mac / web Version
 arrow keys Move Player car left or right
 
 X or C Start a new game at the boot or gameover screen
+F to put game in full screen mode
+F3 to switch to next source folder (switch between playdate and colored graphics)
 
 gamepads are also supported especially xinput ones as long as SDL2 detects them
