@@ -36,7 +36,11 @@ jobs:
           tar -xvf "PlaydateSDK-latest.tar.gz"
           rm -f "PlaydateSDK-latest.tar.gz"
           mv PlaydateSDK-* PlaydateSDK  
-      
+                  
+      - name: remove alternate Source folder
+        run: |
+          rm -rf Source/Source1
+
       - name: Setup Secret codekey.h File
         env: 
           SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
