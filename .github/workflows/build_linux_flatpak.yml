@@ -11,9 +11,30 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-23.08
       options: --privileged
     steps:
-    - uses: actions/checkout@v3
-    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-      with:
-        bundle: Formula1_playdate.flatpak
-        manifest-path: com.github.joyrider3774.formula1_playdate.yml
-        cache-key: flatpak-builder-${{ github.sha }}
+      - name: Checkout Playdate SDL2 Api Sources
+        uses: actions/checkout@v3
+        with:
+          repository: 'joyrider3774/Playdate_Api_SDL2'
+
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          path: tmp
+          
+      - name: Setup Secret codekey.h File
+        env: 
+          SECRET: ${{ secrets.RETROTIME_PLAYDATE_CODEKEY }}
+        run : |
+          echo "$SECRET" | base64 --decode >  tmp/src/codekey.h
+
+      - name: move things to correct directories
+        run: |
+          rm -rf ./src/srcgame
+          mv tmp/src ./src/srcgame
+          cp -Rf tmp/Source/. ./Source
+
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: Formula1_playdate.flatpak
+          manifest-path: com.github.joyrider3774.formula1_playdate.yml
+          cache-key: flatpak-builder-${{ github.sha }}

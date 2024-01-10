@@ -1,6 +1,6 @@
 app-id: com.github.joyrider3774.formula1_playdate
 runtime: org.freedesktop.Platform
-runtime-version: "22.08"
+runtime-version: "23.08"
 sdk: org.freedesktop.Sdk
 command: /app/game/game
 
@@ -36,14 +36,8 @@ modules:
   - name: Game
     buildsystem: simple
     build-commands:  
-      - rm -rf Playdate_Api_SDL2/src/srcgame
-      - mv formula1_playdate/src Playdate_Api_SDL2/src/srcgame
-      - cp -Rf formula1_playdate/Source/. Playdate_Api_SDL2/Source
-      - cd Playdate_Api_SDL2
       - make "SRC_C_DIR=src/srcgame src/srcgame/scoresubmit" "CFLAGS_EXTRA=`pkg-config --cflags SDL2_gfx`" "LDFLAGS_EXTRA=`pkg-config --libs SDL2_gfx`" WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240
-      - move Playdate_Api_SDL2/Source /app/game
+      - move Source /app/game
     sources:
-      - type: git
-        url: https://github.com/joyrider3774/formula1_playdate
-      - type: git
-        url: https://github.com/joyrider3774/joyrider3774/Playdate_Api_SDL2
+      - type: dir
+        path: ./
