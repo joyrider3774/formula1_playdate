@@ -2,7 +2,7 @@ app-id: com.github.joyrider3774.formula1_playdate
 runtime: org.freedesktop.Platform
 runtime-version: "23.08"
 sdk: org.freedesktop.Sdk
-command: /app/game/game
+command: bash -c 'cd "/app/game" && ./game'
 
 finish-args:
   - --device=all # needed for gamepads
