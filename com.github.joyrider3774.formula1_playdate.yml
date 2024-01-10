@@ -37,7 +37,7 @@ modules:
     buildsystem: simple
     build-commands:  
       - make "SRC_C_DIR=src/srcgame src/srcgame/scoresubmit" "CFLAGS_EXTRA=`pkg-config --cflags SDL2_gfx`" "LDFLAGS_EXTRA=`pkg-config --libs SDL2_gfx`" WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240
-      - move Source /app/game
+      - mv Source /app/game
     sources:
       - type: dir
         path: ../
