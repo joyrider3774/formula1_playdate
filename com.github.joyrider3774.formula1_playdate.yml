@@ -40,4 +40,4 @@ modules:
       - move Source /app/game
     sources:
       - type: dir
-        path: ./
+        path: ../
