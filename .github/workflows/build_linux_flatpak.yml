@@ -32,7 +32,14 @@ jobs:
           rm -rf ./src/srcgame
           mv tmp/src ./src/srcgame
           cp -Rf tmp/Source/. ./Source
-
+      
+      - name: create game.sh
+        run: |
+          echo "#!/bin/bash" > "./Source/game.sh"
+          echo "cd /app/game" >> "./Source/game.sh"
+          echo "./game \"\$@\"" >> "./Source/game.sh"
+          chmod +x "./Source/game.sh"
+ 
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: Formula1_playdate.flatpak
