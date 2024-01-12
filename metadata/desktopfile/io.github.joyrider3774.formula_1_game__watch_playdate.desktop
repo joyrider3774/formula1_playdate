@@ -7,5 +7,5 @@ Comment=A Port of the Formula 1 Game & Watch Playdate game
 Categories=Game;ArcadeGame;
 
 Icon=io.github.joyrider3774.formula_1_game__watch_playdate
-Exec=flatpak run io.github.joyrider3774.formula_1_game__watch_playdate
+Exec=formula1_playdate
 Terminal=false
