@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.joyrider3774.formula_1_game__watch_playdate</id>
+  
+  <name>Formula 1 Game &amp; Watch Playdate</name>
+  <summary>A Port of the Formula 1 Game &amp; Watch Playdate game</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>gamepad</control>
+  </supports>
+  
+  <description>
+    <p>
+      Formula 1 Game &amp; Watch is a small, fictive formula 1 game &amp; watch style lcd game with high score keeping. The Game was initially created over a decade ago for a small retrogame competition, after which it got ported to the gp2x. This version is based on the gp2x version but with added high score saving and optional crank controls for the playdate version.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">io.github.joyrider3774.formula_1_game__watch_playdate.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://github.com/joyrider3774/formula1_playdate/blob/main/metadata/screenshots/Formula%201%20Game%20%26%20Watch%20screenshot%203.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/joyrider3774/formula1_playdate/blob/main/metadata/screenshots/Formula%201%20Game%20%26%20Watch%20screenshot%204.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/joyrider3774/formula1_playdate/blob/main/metadata/screenshots/Formula%201%20Game%20%26%20Watch%20screenshot%201.png</image>
+    </screenshot>
+  </screenshots>
+</component>
