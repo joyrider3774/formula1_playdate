@@ -60,7 +60,7 @@ jobs:
         env: # Or as an environment variable
           SECRET: ${{ secrets.FORMULA1_PLAYDATE_CODEKEY }}
         run: |
-          make "SRC_C_DIR=src/srcgame src/srcgame/scoresubmit" WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240 LDUSEX11=0
+          make "SRC_C_DIR=src/srcgame src/srcgame/scoresubmit" WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240 LDUSEX11=0 SCALINGMODE=0
       - name: Copy dll libraries
         shell: msys2 {0}
         run: |
